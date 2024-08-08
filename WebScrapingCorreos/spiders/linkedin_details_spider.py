@@ -13,10 +13,12 @@ class LinkedinDetailsSpider(scrapy.Spider):
 
     def parse_details(self, response):
         yield {
-            'Name': response.xpath('//some/xpath/for/name').get(),
-            'Is Business': response.xpath('//some/xpath/for/business').get(),
-            'Email': response.xpath('//some/xpath/for/email').get(),
-            'Address': response.xpath('//some/xpath/for/address').get(),
-            'Phone': response.xpath('//some/xpath/for/phone').get(),
-            'Extra': response.xpath('//some/xpath/for/extra').get()
+            'Name': response.xpath('//h1[contains(@class, "text-heading-xlarge")]/text()').get(),
+            'Title': response.xpath('//div[contains(@class, "text-body-medium")]/text()').get(),
+            'Profile Picture URL': response.xpath('//button[contains(@aria-label, "foto del perfil")]//img/@src').get(),
+            'Current Company': response.xpath('//li[contains(@class, "YhCbXgtTNvusUHWUOSEztKCHzGtPJzHxs")]//span[contains(@class, "hoverable-link-text")]//div/text()').get(),
+            'Education': response.xpath('//li[contains(@class, "YhCbXgtTNvusUHWUOSEztKCHzGtPJzHxs")]//span[contains(@class, "hoverable-link-text")]//div/text()').get(),
+            'Location': response.xpath('//span[contains(@class, "text-body-small") and contains(@class, "t-black--light")]/text()').get(),
+            'Contact Info Link': response.xpath('//a[@id="top-card-text-details-contact-info"]/@href').get(),
+            'Website': response.xpath('//section[contains(@class, "pv-top-card--website")]//a/@href').get(),
         }
